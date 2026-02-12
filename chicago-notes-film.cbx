@@ -1,0 +1,38 @@
+\ProvidesFile{chicago-notes-film.cbx}[2006/03/15 v1.0 biblatex citation style]
+
+\RequireCitationStyle{verbose-trad2} % base style
+
+\DeclareNameFormat{firstname-last}{%
+  \nameparts{#1}%
+  \usebibmacro{name:given-family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\partnamesuffix}%
+}%
+
+\newbibmacro*{videocite}{%
+  \ifciteseen %
+    {% Subsequent citation: use shorttitle if available      
+      \printtext{%
+        \iffieldundef{shorttitle}%
+          {\printfield[title]{title}}%
+          {\printfield[title]{shorttitle}}}%
+    }%
+    {% First citation: italic title + (Author, Year)    
+      \printtext{{\printfield[title]{title}}}%
+      \setunit{\space}%
+      \printtext{(%
+        \printnames[firstname-last]{author}%
+        \setunit{\addcomma\space}%
+        \printfield{year}%
+      )}%
+    }%
+}%
+
+% --- Override \citetitle for videos only ---
+\DeclareCiteCommand{\textcite}[]%
+  {\usebibmacro{prenote}}%
+  {%
+    \ifentrytype{video}%
+      {\usebibmacro{videocite}}%
+      {\printfield[citetitle]{title}}%
+  }%
+  {\multicitedelim}%
+  {\usebibmacro{postnote}}%

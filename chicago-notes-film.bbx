@@ -1,0 +1,21 @@
+\ProvidesFile{chicago-notes-film.bbx}[2006/03/15 v1.0 biblatex citation style]
+
+\RequireBibliographyStyle{authoryear} % base style
+
+\DeclareBibliographyDriver{video}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  % Author
+  % \printnames{author}%
+  \usebibmacro{author}%
+  \setunit{\space}%
+  % (Date)
+  \printtext[parens]{\printdate}%
+  \newunit\newblock
+  % Title (italic by default)
+  \printfield[title]{title}%
+  \newunit\newblock
+  % Publisher
+  \printlist{publisher}%
+  \usebibmacro{finentry}%
+}
